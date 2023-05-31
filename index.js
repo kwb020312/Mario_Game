@@ -46,3 +46,24 @@ function animate() {
 }
 
 animate();
+
+addEventListener("keydown", ({ keyCode }) => {
+  switch (keyCode) {
+    case 65: {
+      console.log("left");
+      break;
+    }
+
+    case 83:
+      console.log("down");
+      break;
+
+    case 68:
+      console.log("right");
+      break;
+    case 87:
+      console.log("up");
+      player.velocity.y -= 20;
+      break;
+  }
+});
