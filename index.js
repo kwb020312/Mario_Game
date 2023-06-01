@@ -79,10 +79,12 @@ function animate() {
     player.velocity.x = 0;
   }
 
-  // 플레이어 플랫폼 충돌 감지
+  // 플레이어 지면 밟음 감지
   if (
     player.position.y + player.height <= platform.position.y &&
-    player.position.y + player.height + player.velocity.y >= platform.position.y
+    player.position.y + player.height + player.velocity.y >=
+      platform.position.y &&
+    player.position.x + player.width >= platform.position.x
   ) {
     player.velocity.y = 0;
   }
