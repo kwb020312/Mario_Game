@@ -4,8 +4,10 @@ const c = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
+// 중력
 const gravity = 0.5;
 
+// 플레이어 클래스
 class Player {
   constructor() {
     this.position = {
@@ -37,6 +39,7 @@ class Player {
   }
 }
 
+// 지면 클래스
 class Platform {
   constructor() {
     this.position = {
