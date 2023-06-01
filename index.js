@@ -18,8 +18,8 @@ class Player {
       x: 0,
       y: 0,
     };
-    this.width = 100;
-    this.height = 100;
+    this.width = 30;
+    this.height = 30;
   }
 
   draw() {
@@ -66,13 +66,13 @@ let platforms = [];
 image.onload = () => {
   platforms = [
     new Platform({
-      x: 200,
-      y: 100,
+      x: -1,
+      y: 470,
       image,
     }),
     new Platform({
-      x: 500,
-      y: 200,
+      x: image.width - 2,
+      y: 470,
       image,
     }),
   ];
