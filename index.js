@@ -80,6 +80,13 @@ function animate() {
     player.velocity.x = -5;
   } else {
     player.velocity.x = 0;
+
+    // 제한 영역을 넘었다면, 배경이 지나가는 것처럼 효과를 줌
+    if (keys.right.pressed) {
+      platform.position.x -= 5;
+    } else if (keys.left.pressed) {
+      platform.position.x += 5;
+    }
   }
 
   // 플레이어 지면 밟음 감지
