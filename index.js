@@ -57,7 +57,7 @@ class Platform {
 }
 
 const player = new Player();
-const platform = new Platform();
+const platforms = [new Platform()];
 
 const keys = {
   right: {
@@ -71,7 +71,9 @@ function animate() {
   c.clearRect(0, 0, canvas.width, canvas.height);
 
   player.update();
-  platform.draw();
+  platforms.forEach((platform) => {
+    platform.draw();
+  });
 
   // 플레이어 이동
   if (keys.right.pressed && player.position.x < 400) {
@@ -83,22 +85,28 @@ function animate() {
 
     // 제한 영역을 넘었다면, 배경이 지나가는 것처럼 효과를 줌
     if (keys.right.pressed) {
-      platform.position.x -= 5;
+      platforms.forEach((platform) => {
+        platform.position.x -= 5;
+      });
     } else if (keys.left.pressed) {
-      platform.position.x += 5;
+      platforms.forEach((platform) => {
+        platform.position.x += 5;
+      });
     }
   }
 
-  // 플레이어 지면 밟음 감지
-  if (
-    player.position.y + player.height <= platform.position.y &&
-    player.position.y + player.height + player.velocity.y >=
-      platform.position.y &&
-    player.position.x + player.width >= platform.position.x &&
-    player.position.x <= platform.position.x + platform.width
-  ) {
-    player.velocity.y = 0;
-  }
+  platforms.forEach((platform) => {
+    // 플레이어 지면 밟음 감지
+    if (
+      player.position.y + player.height <= platform.position.y &&
+      player.position.y + player.height + player.velocity.y >=
+        platform.position.y &&
+      player.position.x + player.width >= platform.position.x &&
+      player.position.x <= platform.position.x + platform.width
+    ) {
+      player.velocity.y = 0;
+    }
+  });
 }
 
 animate();
