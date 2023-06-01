@@ -41,10 +41,10 @@ class Player {
 
 // 지면 클래스
 class Platform {
-  constructor() {
+  constructor({ x, y }) {
     this.position = {
-      x: 200,
-      y: 100,
+      x,
+      y,
     };
     this.width = 200;
     this.height = 20;
@@ -57,7 +57,16 @@ class Platform {
 }
 
 const player = new Player();
-const platforms = [new Platform()];
+const platforms = [
+  new Platform({
+    x: 200,
+    y: 100,
+  }),
+  new Platform({
+    x: 500,
+    y: 200,
+  }),
+];
 
 const keys = {
   right: {
