@@ -1,8 +1,8 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+canvas.width = 1024;
+canvas.height = 576;
 
 // 중력
 const gravity = 0.5;
@@ -90,7 +90,8 @@ let scrollOffset = 0;
 
 function animate() {
   requestAnimationFrame(animate);
-  c.clearRect(0, 0, canvas.width, canvas.height);
+  c.fillStyle = "white";
+  c.fillRect(0, 0, canvas.width, canvas.height);
 
   platforms.forEach((platform) => {
     platform.draw();
