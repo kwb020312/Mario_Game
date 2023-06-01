@@ -75,6 +75,9 @@ const keys = {
   left: {},
 };
 
+//  골인지점
+let scrollOffset = 0;
+
 function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
@@ -94,10 +97,14 @@ function animate() {
 
     // 제한 영역을 넘었다면, 배경이 지나가는 것처럼 효과를 줌
     if (keys.right.pressed) {
+      scrollOffset += 5;
+
       platforms.forEach((platform) => {
         platform.position.x -= 5;
       });
     } else if (keys.left.pressed) {
+      scrollOffset -= 5;
+
       platforms.forEach((platform) => {
         platform.position.x += 5;
       });
@@ -116,6 +123,11 @@ function animate() {
       player.velocity.y = 0;
     }
   });
+
+  // 승리 조건 달성
+  if (scrollOffset > 2000) {
+    console.log("골인");
+  }
 }
 
 animate();
