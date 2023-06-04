@@ -110,6 +110,11 @@ const genericObjects = [
     y: -1,
     image: createImage(background),
   }),
+  new GenericObj({
+    x: -1,
+    y: -1,
+    image: createImage(hills),
+  }),
 ];
 
 const keys = {
