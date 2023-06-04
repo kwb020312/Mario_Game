@@ -56,27 +56,61 @@ class Platform {
   }
 }
 
-const image = new Image();
-image.src = "./img/platform.png";
+// 클래스
+class GenericObj {
+  constructor({ x, y, image }) {
+    this.position = {
+      x,
+      y,
+    };
+    this.image = image;
+    this.width = image.width;
+    this.height = image.height;
+  }
+
+  draw() {
+    c.drawImage(this.image, this.position.x, this.position.y);
+  }
+}
+
+// 이미지 경로
+const platform = "./img/platform.png";
+const background = "./img/background.png";
+const hills = "./img/hills.png";
+
+// 지면
+const platformImage = createImage(platform);
+
+function createImage(imageSrc) {
+  const image = new Image();
+  image.src = imageSrc;
+  return image;
+}
 
 const player = new Player();
-
 let platforms = [];
-
-image.onload = () => {
+platformImage.onload = () => {
   platforms = [
     new Platform({
       x: -1,
       y: 470,
-      image,
+      image: platformImage,
     }),
     new Platform({
-      x: image.width - 2,
+      x: platformImage.width - 2,
       y: 470,
-      image,
+      image: platformImage,
     }),
   ];
 };
+
+const genericObjects = [
+  new GenericObj({
+    x: 0,
+    y: 0,
+    image: createImage(background),
+  }),
+];
 
 const keys = {
   right: {
