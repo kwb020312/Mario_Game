@@ -10,6 +10,7 @@ const gravity = 0.5;
 // 플레이어 클래스
 class Player {
   constructor() {
+    this.speed = 10;
     this.position = {
       x: 100,
       y: 100,
@@ -199,32 +200,32 @@ function animate() {
 
   // 플레이어 이동
   if (keys.right.pressed && player.position.x < 400) {
-    player.velocity.x = 5;
+    player.velocity.x = player.speed;
   } else if (keys.left.pressed && player.position.x > 100) {
-    player.velocity.x = -5;
+    player.velocity.x = -player.speed;
   } else {
     player.velocity.x = 0;
 
     // 제한 영역을 넘었다면, 배경이 지나가는 것처럼 효과를 줌
     if (keys.right.pressed) {
-      scrollOffset += 5;
+      scrollOffset += player.speed;
 
       platforms.forEach((platform) => {
-        platform.position.x -= 5;
+        platform.position.x -= player.speed;
       });
 
       genericObjects.forEach((genericObject) => {
-        genericObject.position.x -= 3;
+        genericObject.position.x -= player.speed * 0.66;
       });
     } else if (keys.left.pressed) {
-      scrollOffset -= 5;
+      scrollOffset -= player.speed;
 
       platforms.forEach((platform) => {
-        platform.position.x += 5;
+        platform.position.x += player.speed;
       });
 
       genericObjects.forEach((genericObject) => {
-        genericObject.position.x += 3;
+        genericObject.position.x += player.speed * 0.66;
       });
     }
   }
@@ -270,7 +271,7 @@ addEventListener("keydown", ({ keyCode }) => {
       keys.right.pressed = true;
       break;
     case 87:
-      player.velocity.y -= 20;
+      player.velocity.y -= 15;
       break;
   }
 });
