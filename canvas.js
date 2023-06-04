@@ -76,9 +76,11 @@ class GenericObj {
 const platform = "./img/platform.png";
 const background = "./img/background.png";
 const hills = "./img/hills.png";
+const platformSmallTall = "./img/platformSmallTall.png";
 
 // 지면
 let platformImage = createImage(platform);
+let platformSmallTallImage = createImage(platformSmallTall);
 
 function createImage(imageSrc) {
   const image = new Image();
@@ -90,37 +92,10 @@ let player = new Player();
 let platforms = [];
 platformImage.onload = () => {
   // 지면 배열
-  platforms = [
-    new Platform({
-      x: -1,
-      y: 470,
-      image: platformImage,
-    }),
-    new Platform({
-      x: platformImage.width - 2,
-      y: 470,
-      image: platformImage,
-    }),
-    new Platform({
-      x: platformImage.width * 2 + 100,
-      y: 470,
-      image: platformImage,
-    }),
-  ];
+  platforms = [];
 };
 
-let genericObjects = [
-  new GenericObj({
-    x: -1,
-    y: -1,
-    image: createImage(background),
-  }),
-  new GenericObj({
-    x: -1,
-    y: -1,
-    image: createImage(hills),
-  }),
-];
+let genericObjects = [];
 
 const keys = {
   right: {
@@ -148,6 +123,16 @@ function init() {
     // 지면 배열
     platforms = [
       new Platform({
+        x:
+          platformImage.width * 4 +
+          300 -
+          2 +
+          platformImage.width -
+          platformSmallTallImage.width,
+        y: 270,
+        image: createImage(platformSmallTall),
+      }),
+      new Platform({
         x: -1,
         y: 470,
         image: platformImage,
@@ -159,6 +144,21 @@ function init() {
       }),
       new Platform({
         x: platformImage.width * 2 + 100,
+        y: 470,
+        image: platformImage,
+      }),
+      new Platform({
+        x: platformImage.width * 3 + 300,
+        y: 470,
+        image: platformImage,
+      }),
+      new Platform({
+        x: platformImage.width * 4 + 300 - 2,
+        y: 470,
+        image: platformImage,
+      }),
+      new Platform({
+        x: platformImage.width * 5 + 700 - 2,
         y: 470,
         image: platformImage,
       }),
@@ -254,6 +254,7 @@ function animate() {
   }
 }
 
+init();
 animate();
 
 addEventListener("keydown", ({ keyCode }) => {
