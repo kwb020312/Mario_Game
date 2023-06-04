@@ -33,8 +33,6 @@ class Player {
     this.position.y += this.velocity.y;
     if (this.position.y + this.height + this.velocity.y <= canvas.height) {
       this.velocity.y += gravity;
-    } else {
-      this.velocity.y = 0;
     }
   }
 }
@@ -79,7 +77,7 @@ const background = "./img/background.png";
 const hills = "./img/hills.png";
 
 // 지면
-const platformImage = createImage(platform);
+let platformImage = createImage(platform);
 
 function createImage(imageSrc) {
   const image = new Image();
@@ -87,9 +85,10 @@ function createImage(imageSrc) {
   return image;
 }
 
-const player = new Player();
+let player = new Player();
 let platforms = [];
 platformImage.onload = () => {
+  // 지면 배열
   platforms = [
     new Platform({
       x: -1,
@@ -101,10 +100,15 @@ platformImage.onload = () => {
       y: 470,
       image: platformImage,
     }),
+    new Platform({
+      x: platformImage.width * 2 + 100,
+      y: 470,
+      image: platformImage,
+    }),
   ];
 };
 
-const genericObjects = [
+let genericObjects = [
   new GenericObj({
     x: -1,
     y: -1,
@@ -126,6 +130,56 @@ const keys = {
 
 //  골인지점
 let scrollOffset = 0;
+
+// 초기화 함수
+function init() {
+  // 지면
+  platformImage = createImage(platform);
+
+  function createImage(imageSrc) {
+    const image = new Image();
+    image.src = imageSrc;
+    return image;
+  }
+
+  player = new Player();
+  platformImage.onload = () => {
+    // 지면 배열
+    platforms = [
+      new Platform({
+        x: -1,
+        y: 470,
+        image: platformImage,
+      }),
+      new Platform({
+        x: platformImage.width - 2,
+        y: 470,
+        image: platformImage,
+      }),
+      new Platform({
+        x: platformImage.width * 2 + 100,
+        y: 470,
+        image: platformImage,
+      }),
+    ];
+  };
+
+  genericObjects = [
+    new GenericObj({
+      x: -1,
+      y: -1,
+      image: createImage(background),
+    }),
+    new GenericObj({
+      x: -1,
+      y: -1,
+      image: createImage(hills),
+    }),
+  ];
+
+  //  골인지점
+  scrollOffset = 0;
+}
 
 function animate() {
   requestAnimationFrame(animate);
@@ -191,6 +245,11 @@ function animate() {
   // 승리 조건 달성
   if (scrollOffset > 2000) {
     console.log("골인");
+  }
+
+  // 패배 조건
+  if (player.position.y > canvas.height) {
+    init();
   }
 }
 
