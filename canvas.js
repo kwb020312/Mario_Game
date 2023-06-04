@@ -243,8 +243,8 @@ function animate() {
     }
   });
 
-  // 승리 조건 달성
-  if (scrollOffset > 2000) {
+  // 승리 조건
+  if (scrollOffset > platformImage.width * 5 + 700 - 2) {
     console.log("골인");
   }
 
