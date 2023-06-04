@@ -127,6 +127,12 @@ function animate() {
   c.fillStyle = "white";
   c.fillRect(0, 0, canvas.width, canvas.height);
 
+  // 배경 그리기
+  genericObjects.forEach((genericObject) => {
+    genericObject.draw();
+  });
+
+  // 지면 생성
   platforms.forEach((platform) => {
     platform.draw();
   });
