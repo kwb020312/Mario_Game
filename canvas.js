@@ -21,7 +21,7 @@ class Player {
     };
     this.width = 66;
     this.height = 150;
-
+    this.isJumped = false;
     this.image = createImage(spriteStandRight);
     this.frames = 0;
     this.sprites = {
@@ -292,6 +292,7 @@ function animate() {
       player.position.x <= platform.position.x + platform.width
     ) {
       player.velocity.y = 0;
+      player.isJumped = false;
     }
   });
 
@@ -361,7 +362,11 @@ addEventListener("keydown", ({ keyCode }) => {
       lastKey = "right";
       break;
     case 87:
-      player.velocity.y -= 15;
+      if (!player.isJumped) {
+        player.isJumped = true;
+        player.velocity.y -= 15;
+      }
+
       break;
   }
 });
