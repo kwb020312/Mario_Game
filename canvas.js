@@ -19,13 +19,20 @@ class Player {
       x: 0,
       y: 0,
     };
-    this.width = 30;
-    this.height = 30;
+    this.width = 66;
+    this.height = 150;
+
+    this.image = createImage(spriteStandRight);
   }
 
   draw() {
-    c.fillStyle = "red";
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
+    c.drawImage(
+      this.image,
+      this.position.x,
+      this.position.y,
+      this.width,
+      this.height
+    );
   }
 
   update() {
@@ -77,6 +84,10 @@ const platform = "./img/platform.png";
 const background = "./img/background.png";
 const hills = "./img/hills.png";
 const platformSmallTall = "./img/platformSmallTall.png";
+const spriteRunLeft = "./img/spriteRunLeft.png";
+const spriteRunRight = "./img/spriteRunRight.png";
+const spriteStandLeft = "./img/spriteStandLeft.png";
+const spriteStandRight = "./img/spriteStandRight.png";
 
 // 지면
 let platformImage = createImage(platform);
