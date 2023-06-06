@@ -59,9 +59,19 @@ class Player {
 
   update() {
     this.frames++;
-    if (this.frames > 59 && this.currentSprite === this.sprites.stand.right)
+    if (
+      this.frames > 59 &&
+      [this.sprites.stand.right, this.sprites.stand.left].includes(
+        this.currentSprite
+      )
+    )
       this.frames = 0;
-    else if (this.frames > 29 && this.currentSprite === this.sprites.run.right)
+    else if (
+      this.frames > 29 &&
+      [this.sprites.run.right, this.sprites.run.left].includes(
+        this.currentSprite
+      )
+    )
       this.frames = 0;
     this.draw();
     this.position.x += this.velocity.x;
@@ -135,6 +145,7 @@ platformImage.onload = () => {
 
 let genericObjects = [];
 
+let lastKey;
 const keys = {
   right: {
     pressed: false,
@@ -284,8 +295,43 @@ function animate() {
     }
   });
 
-  // 승리 조건
+  // 좌우키 중복입력 방지
+  if (
+    keys.right.pressed &&
+    lastKey === "right" &&
+    player.currentSprite !== player.sprites.run.right
+  ) {
+    player.frames = 1;
+    player.currentSprite = player.sprites.run.right;
+    player.currentCropWidth = player.sprites.run.cropWidth;
+    player.width = player.sprites.run.width;
+  } else if (
+    keys.left.pressed &&
+    lastKey === "left" &&
+    player.currentSprite !== player.sprites.run.left
+  ) {
+    player.currentSprite = player.sprites.run.left;
+    player.currentCropWidth = player.sprites.run.cropWidth;
+    player.width = player.sprites.run.width;
+  } else if (
+    !keys.left.pressed &&
+    lastKey === "left" &&
+    player.currentSprite !== player.sprites.stand.left
+  ) {
+    player.currentSprite = player.sprites.stand.left;
+    player.currentCropWidth = player.sprites.stand.cropWidth;
+    player.width = player.sprites.stand.width;
+  } else if (
+    !keys.right.pressed &&
+    lastKey === "right" &&
+    player.currentSprite !== player.sprites.stand.right
+  ) {
+    player.currentSprite = player.sprites.stand.right;
+    player.currentCropWidth = player.sprites.stand.cropWidth;
+    player.width = player.sprites.stand.width;
+  }
   if (scrollOffset > platformImage.width * 5 + 300 - 2) {
+    // 승리 조건
     console.log("골인");
   }
 
@@ -302,6 +348,7 @@ addEventListener("keydown", ({ keyCode }) => {
   switch (keyCode) {
     case 65: {
       keys.left.pressed = true;
+      lastKey = "left";
       break;
     }
 
@@ -311,9 +358,7 @@ addEventListener("keydown", ({ keyCode }) => {
 
     case 68:
       keys.right.pressed = true;
-      player.currentSprite = player.sprites.run.right;
-      player.currentCropWidth = player.sprites.run.cropWidth;
-      player.width = player.sprites.run.width;
+      lastKey = "right";
       break;
     case 87:
       player.velocity.y -= 15;
@@ -334,9 +379,6 @@ addEventListener("keyup", ({ keyCode }) => {
 
     case 68:
       keys.right.pressed = false;
-      player.currentSprite = player.sprites.stand.right;
-      player.currentCropWidth = player.sprites.stand.cropWidth;
-      player.width = player.sprites.stand.width;
       break;
     case 87:
       break;
