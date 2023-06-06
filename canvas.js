@@ -23,11 +23,33 @@ class Player {
     this.height = 150;
 
     this.image = createImage(spriteStandRight);
+    this.frames = 0;
+    this.sprites = {
+      stand: {
+        right: createImage(spriteStandRight),
+        cropWidth: 177,
+        width: 66,
+        left: createImage(spriteStandLeft),
+      },
+      run: {
+        right: createImage(spriteRunRight),
+        cropWidth: 341,
+        left: createImage(spriteRunLeft),
+        width: 127.875,
+      },
+    };
+
+    this.currentSprite = this.sprites.stand.right;
+    this.currentCropWidth = this.sprites.stand.cropWidth;
   }
 
   draw() {
     c.drawImage(
-      this.image,
+      this.currentSprite,
+      this.currentCropWidth * this.frames,
+      0,
+      this.currentCropWidth,
+      400,
       this.position.x,
       this.position.y,
       this.width,
@@ -36,6 +58,11 @@ class Player {
   }
 
   update() {
+    this.frames++;
+    if (this.frames > 59 && this.currentSprite === this.sprites.stand.right)
+      this.frames = 0;
+    else if (this.frames > 29 && this.currentSprite === this.sprites.run.right)
+      this.frames = 0;
     this.draw();
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
@@ -284,6 +311,9 @@ addEventListener("keydown", ({ keyCode }) => {
 
     case 68:
       keys.right.pressed = true;
+      player.currentSprite = player.sprites.run.right;
+      player.currentCropWidth = player.sprites.run.cropWidth;
+      player.width = player.sprites.run.width;
       break;
     case 87:
       player.velocity.y -= 15;
